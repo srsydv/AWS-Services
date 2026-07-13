@@ -1,0 +1,27 @@
+{
+  "name": "aws-services-nodejs",
+  "version": "1.0.0",
+  "description": "Node.js backend for learning and integrating AWS services",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "aws",
+    "nodejs",
+    "express"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.840.0",
+    "@aws-sdk/client-sqs": "^3.840.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "mongoose": "^9.7.4",
+    "morgan": "^1.10.0"
+  }
+}
