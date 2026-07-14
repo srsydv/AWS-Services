@@ -6,7 +6,12 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "dev": "node --watch src/server.js",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "db:learn": "node src/db/learn-examples.js"
   },
   "keywords": [
     "aws",
@@ -19,10 +24,14 @@
     "@aws-sdk/client-sqs": "^3.840.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.45.2",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "mongoose": "^9.7.4",
     "morgan": "^1.10.0",
     "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.10"
   }
 }
