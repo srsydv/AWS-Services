@@ -1,40 +1,29 @@
-import dotenv from 'dotenv';
 import { env } from '../config/env.js';
 import { EnvToggle } from '../models/envToggle.model.js';
 
-function parseBoolean(value) {
-  if (value === undefined || value === null || value === '') {
-    return false;
-  }
-
-  return ['true', '1', 'yes'].includes(String(value).trim().toLowerCase());
-}
-
-async function syncEnvToggle() {
-  dotenv.config({ override: true });
-
-  const rawValue = process.env[env.envToggleKey];
-  const value = parseBoolean(rawValue);
+async function toggleEnvStatus() {
+  const existing = await EnvToggle.findOne({ key: env.envToggleKey });
+  const nextValue = existing ? !existing.value : true;
 
   await EnvToggle.findOneAndUpdate(
     { key: env.envToggleKey },
-    { key: env.envToggleKey, value },
+    { key: env.envToggleKey, value: nextValue },
     { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true },
   );
 
-  console.log(`[env-toggle] ${env.envToggleKey} synced to MongoDB: ${value}`);
+  console.log(`[env-toggle] ${env.envToggleKey} toggled to: ${nextValue}`);
 }
 
 export function startEnvToggleSync() {
-  const runSync = () => {
-    syncEnvToggle().catch((error) => {
-      console.error('[env-toggle] sync failed:', error.message);
+  const runToggle = () => {
+    toggleEnvStatus().catch((error) => {
+      console.error('[env-toggle] toggle failed:', error.message);
     });
   };
 
-  runSync();
+  runToggle();
 
-  const intervalId = setInterval(runSync, env.envToggleIntervalMs);
+  const intervalId = setInterval(runToggle, 5000);
 
   return () => clearInterval(intervalId);
 }

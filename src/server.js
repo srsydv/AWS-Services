@@ -13,7 +13,7 @@ async function start() {
   const server = app.listen(env.port, () => {
     console.log(`Server running on http://localhost:${env.port}`);
     console.log(`Environment: ${env.nodeEnv}`);
-    console.log(`Env toggle sync running every ${env.envToggleIntervalMs}ms`);
+    console.log(`Env toggle auto-flip running every ${env.envToggleIntervalMs}ms`);
   });
 
   const shutdown = () => {
